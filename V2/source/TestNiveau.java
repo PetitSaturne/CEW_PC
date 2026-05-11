@@ -125,18 +125,3 @@ public class TestNiveau
 	}
 	
 }
-
-/*try 
-{
-	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-	
-} catch (Exception e) {e.printStackTrace();}*/
-
-
-/** TO DO :
-	 * 
-	 * Gérer les cellules lorsque que plusieurs liaison leurs sont assignés.
-	 * 
-	 * Réutiliser la classe Liaison pour permettre ce genre de lien.
-	 * 
-	 */

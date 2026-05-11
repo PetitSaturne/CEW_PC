@@ -59,11 +59,11 @@ public class Cellule
 	protected Equipe equipe;
 	protected String capacite;
 
-	protected int    pv;
-	protected int    niveauActuel;
-	protected int    niveauPrc   ;
-	protected int    nbTentacules;
-	protected int    nbLiasonsActives;
+	protected int pv;
+	protected int niveauActuel;
+	protected int niveauPrc   ;
+	protected int nbTentacules;
+	protected int nbLiasonsActives;
 
 
 	/**
@@ -153,6 +153,7 @@ public class Cellule
 
 		this.equipe = e;
 		return true;
+
 	}	
 
 	public void supprimerLiaisonActive() {this.nbLiasonsActives--;}
@@ -170,8 +171,8 @@ public class Cellule
 		if (niveauActuel > Cellule.NIVEAU_MAXI)  return false;
 		if (pv     <= 0 && niveauActuel <= 0  )  return false;
 		
-		return true;
-		
+		return true;	
+
 	}
 
 	public boolean lienPossible() { return this.nbLiasonsActives < this.nbTentacules && this.nbLiasonsActives >= 0;}
@@ -186,6 +187,7 @@ public class Cellule
 				"Capacité           : " + this.getCapacite  ();
 
 		return sRet;
+		
 	}
 
 	/* ---------------------------------- */

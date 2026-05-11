@@ -52,8 +52,8 @@ public class Niveau
 		}
 		sRet += "\n";
 		
-
 		return sRet;
+
 	}
 
 	public Equipe getEquipe(String nomEquipe)
@@ -64,7 +64,9 @@ public class Niveau
 				return e;
 
 		return null;
+
 	}
+
 	/* ---------------------------------- */
 	/*           Autres Méthodes          */
 	/* ---------------------------------- */
@@ -87,6 +89,7 @@ public class Niveau
 		{
 			System.out.println(ex.getMessage() + "\n" );
 		}
+
 	}
 
 	/**
@@ -202,6 +205,7 @@ public class Niveau
 		{	
 			System.out.println(ex.getMessage() );
 		}
+
 	}
 
 	/**
@@ -215,8 +219,12 @@ public class Niveau
 	{
 
 		Cellule cel1, cel2;
+		Liaison lTemp;
+		ArrayList<Liaison> lstTemp;
 
 		cel1 = cel2 = null;
+		lTemp       = null;
+		lstTemp     = new ArrayList<Liaison>(this.lstLiaisons);
 
 		for (Equipe equipe : lstEquipes) 
 			for (Cellule c : equipe.getLstCellules() ) 
@@ -224,8 +232,7 @@ public class Niveau
 				if (c.getNom() == nom1 || c.getNom() == nom2)
 				{
 					if (cel1 == null) cel1 = c;
-					else              cel2 = c;
-					
+					else              cel2 = c;		
 				}
 			}
 
@@ -244,8 +251,6 @@ public class Niveau
 				("IdenticCellException", "La cellule source est la même que la cellule de destination.");
 			}
 
-			Liaison lTemp = null;
-			ArrayList<Liaison> lstTemp = new ArrayList<Liaison>();
 
 			for (Liaison l : lstLiaisons) 
 			{
@@ -272,6 +277,7 @@ public class Niveau
 		{
 			System.out.println(ex.getMessage() );
 		}
+
 	}
 
 	public void viderLiaison()
@@ -286,6 +292,7 @@ public class Niveau
 		}
 
 		this.lstLiaisons.removeAll(lstLiaisons);
+
 	}
 
 	public String toString()
@@ -301,14 +308,13 @@ public class Niveau
 		sRet += this.getDetailsLiaisons();
 
 		return sRet;
+
 	}
-	
 
 	/* ---------------------------------- */
 	/*     Méthodes Privées/Protégées     */
 	/* ---------------------------------- */
 	
-
 	/**
 	 * 
 	 * @param c1
@@ -325,6 +331,7 @@ public class Niveau
 		if (c1 == c2)                 return 4; // La Cellule 1 et 2 sont identiques.
 		
 		return 0; // Il n'y a pas d'erreur
+		
 	}
 
 }

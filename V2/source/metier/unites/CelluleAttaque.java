@@ -16,6 +16,7 @@ public class CelluleAttaque extends Cellule
 	{
 		super( niveauActuel, pv );
 		this.capacite = "Attaque";
+		
 	}
 	
 }

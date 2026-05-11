@@ -17,6 +17,7 @@ public class CelluleBonus extends Cellule
 
 		this.capacite = "Bonus";
 		this.nbTentacules++;
+		
 	}
 	
 }

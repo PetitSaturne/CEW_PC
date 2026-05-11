@@ -19,6 +19,7 @@ public class Equipe
 	{
 		this.nom         = nom;
 		this.lstCellule  = new ArrayList <Cellule>();
+
 	}
 
 	/* ---------------------------------- */
@@ -100,6 +101,7 @@ public class Equipe
 			sRet += cellule + "\n";
 
 		return sRet;
+
 	}
 
 	/**
@@ -122,5 +124,6 @@ public class Equipe
 			sRet += "\nCellule " + c.getNom() + " de niveau " + c.getNiveau() + " de type " + c.getCapacite();
 	
 		return sRet;
+		
 	}
 }

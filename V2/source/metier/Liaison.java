@@ -35,6 +35,7 @@ public class Liaison
 		cTemp              = this.celluleDest;
 		this.celluleDest   = this.celluleSource;
 		this.celluleSource = cTemp;
+
 	}
 	
 	public String toString()
@@ -42,6 +43,7 @@ public class Liaison
 		return this.celluleSource.getNom()      + " de " + this.celluleSource.getEquipe().getNom() + 
 			   " est la source d'un lien vers " + 
 			   this.celluleDest  .getNom()      + " de " + this.celluleDest  .getEquipe().getNom() + "\n";
+
 	}
 
 }
