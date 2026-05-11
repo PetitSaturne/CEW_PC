@@ -18,6 +18,10 @@ public class Controleur
 
 		0.1 Finir les commentaire sur les autres classes
 
+		
+		
+		Test git n°2
+
 	*/
 
 	private Vue ihm;

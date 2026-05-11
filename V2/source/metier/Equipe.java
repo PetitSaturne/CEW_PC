@@ -9,7 +9,6 @@ import source.metier.unites.*;
 public class Equipe
 {
 	private List<Cellule>                   lstCellule;
-	private HashMap<Cellule,List<Liaison> > hmLiaisonsCellules;
 
 	private String nom;
 
@@ -18,8 +17,6 @@ public class Equipe
 		this.nom = nom;
 
 		this.lstCellule  = new ArrayList <Cellule>();
-		this.hmLiaisonsCellules  = new HashMap <Cellule,List<Liaison>> ();
-
 	}
 
 	public Equipe()
@@ -75,19 +72,6 @@ public class Equipe
 	}
 
 
-	public void associerLiaisonCellules()
-	{
-		List<Liaison> lstLiaisons = new ArrayList<Liaison>();
-
-		for (Cellule cellule : lstCellule) 
-		{
-			for (Cellule cLiaison : cellule.getLstLiaisons() )
-				lstLiaisons.add(Liaison.creerLiaison(cellule, cLiaison ) );
-
-			hmLiaisonsCellules.put(cellule, lstLiaisons);
-		}	
-	}
-
 	public String afficherListeCellule()
 	{
 
@@ -102,8 +86,6 @@ public class Equipe
 	public String toString()
 	{
 
-		boolean possedeLiaisons = false;
-
 		String sRet = "/*--------------------------*/\n"                + 
 		              "/*" + String.format("%16s",  this.nom )  +
 					         String.format("%10s", " ") + "*/\n" + 
@@ -115,18 +97,7 @@ public class Equipe
 
 		for (Cellule c : lstCellule) 
 			sRet += "\nCellule " + c.getNom() + " de niveau " + c.getNiveau() + " de type " + c.getCapacite();
-			
-		for (Cellule c : lstCellule) 
-			if (!c.getDetailLiaisons().equals("") ) possedeLiaisons = true;
 	
-		if (possedeLiaisons)
-			sRet += "\n\n/*------------Liaisons------------*/\n"   ;
-
-		for (Cellule c : lstCellule) 
-			if (!c.getDetailLiaisons().equals("") )
-
-				sRet += c.getDetailLiaisons();
-
 		return sRet;
 	}
 }

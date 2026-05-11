@@ -121,12 +121,12 @@ public class TestCellule
 				    dest.estEnLienAvec  (liaison.getSource().getNom() ) ) existe = true;*/
 			}
 	
-			if (!existe) 
+			/*if (!existe) 
 			{
 				Liaison l = Liaison.creerLiaison(source, dest);
 				if (l != null)
 				lstLiaisons.add(l);
-			}
+			}*/
 		}
 
 	}
@@ -147,8 +147,8 @@ public class TestCellule
 		
 		List<Liaison> lstTemp = new ArrayList<Liaison>(TestCellule.lstLiaisons);
 
-		c1.supprimerLiaison(c2);
-		c2.supprimerLiaison(c1);
+	//	c1.supprimerLiaison(c2);
+	//	c2.supprimerLiaison(c1);
 
 		for (Liaison l : lstLiaisons) 
 		
@@ -169,10 +169,10 @@ public class TestCellule
 			
 				cTemp = TestCellule.ensCellules.get(cpt);
 
-		System.out.println("Liaisons de " + cTemp.getNom() + " --> " + cTemp.getNbLiaisonsActive() + "/" + cTemp.getNbTentacules() );
+		//System.out.println("Liaisons de " + cTemp.getNom() + " --> " + cTemp.getNbLiaisonsActive() + "/" + cTemp.getNbTentacules() );
 
-		for (Cellule cellule : cTemp.getLstLiaisons() )
-			System.out.println(cellule.getNom() );
+		//for (Cellule cellule : cTemp.getLstLiaisons() )
+		//	System.out.println(cellule.getNom() );
 			
 		
 	}
@@ -221,13 +221,13 @@ public class TestCellule
 				   TestCellule.lstLiaisons.size()                    +
 				( (TestCellule.lstLiaisons.size() == 1) ? "\tOK" : "\tErreur" ) + "\n") ;
 
-				System.out.println("Nombre de liaisons sur A : "          + 
+				/*System.out.println("Nombre de liaisons sur A : "          + 
 				   TestCellule.getCellule('A').getNbLiaisonsActive() + 
 				( (TestCellule.getCellule('A').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur" ) ); 
 
 				System.out.println("Nombre de liaisons sur B : "          + 
 				   TestCellule.getCellule('B').getNbLiaisonsActive() +
-				( (TestCellule.getCellule('B').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur"  ) );
+				( (TestCellule.getCellule('B').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur"  ) );*/
 				
 				System.out.println("\nListe des liaisons : \n");
 				TestCellule.afficherListeLiaisons();
@@ -243,7 +243,7 @@ public class TestCellule
 				   TestCellule.lstLiaisons.size()                    + 
 				( (TestCellule.lstLiaisons.size() == 2) ? "\tOK" : "\tErreur " ) + "\n" ) ;
 
-				System.out.println("Nombre de liaisons sur A : "          + 
+				/*System.out.println("Nombre de liaisons sur A : "          + 
 				   TestCellule.getCellule('A').getNbLiaisonsActive() + 
 				( (TestCellule.getCellule('A').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur" ) ); 
 
@@ -253,7 +253,7 @@ public class TestCellule
 
 				System.out.println("Nombre de liaisons sur C : "           +
 				   TestCellule.getCellule('C').getNbLiaisonsActive() +
-				( (TestCellule.getCellule('C').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur --> " ) );
+				( (TestCellule.getCellule('C').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur --> " ) );*/
 
 				System.out.println("\nListe des liaisons : \n");
 				TestCellule.afficherListeLiaisons();
@@ -301,13 +301,13 @@ public class TestCellule
 				   TestCellule.lstLiaisons.size()            + 
 				( (TestCellule.lstLiaisons.size() == 1) ? "\tOK" : "Erreur -->" ) );
 
-				System.out.println("\nNombre de liaisons sur A : "          + 
+				/*System.out.println("\nNombre de liaisons sur A : "          + 
 				   TestCellule.getCellule('A').getNbLiaisonsActive() + 
 				( (TestCellule.getCellule('A').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur" ) ); 
 
 				System.out.println("Nombre de liaisons sur B : "          + 
 				   TestCellule.getCellule('B').getNbLiaisonsActive() + 
-				( (TestCellule.getCellule('B').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur" ) ); 
+				( (TestCellule.getCellule('B').getNbLiaisonsActive() == 1 ) ? "\tOK" : "\tErreur" ) ); */
 
 			}
 
@@ -318,9 +318,9 @@ public class TestCellule
 				   TestCellule.lstLiaisons.size()                      + 
 				( (TestCellule.lstLiaisons.size() == 1) ? "\tOK" : "\tErreur" ) );
 
-				System.out.println("Nombre de liaisons sur C : "          + 
+				/*System.out.println("Nombre de liaisons sur C : "          + 
 				   TestCellule.getCellule('C').getNbLiaisonsActive() + 
-				( (TestCellule.getCellule('C').getNbLiaisonsActive() == 0 ) ? "\tOK" : "\tErreur" ) ); 
+				( (TestCellule.getCellule('C').getNbLiaisonsActive() == 0 ) ? "\tOK" : "\tErreur" ) ); */
 			}
 
 			case 7 ->

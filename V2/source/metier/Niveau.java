@@ -37,13 +37,13 @@ public class Niveau
 		celSource = celDest = null;
 
 		for (Equipe equipe : tabEquipes) 
+
 			for (Cellule c : equipe.getLstCellules() ) 
 			{
 				if ( c.getNom() == de   ) celSource = c;
 				if ( c.getNom() == vers ) celDest   = c;
 			}
 
-		
 		try 
 		{
 
@@ -52,14 +52,13 @@ public class Niveau
 				case 1 -> 
 				throw new LiaisonException("BothNullElementsException",
 				"Les cellules source et de destination ne sont pas définies." );
-				case 2 -> 
-				throw new LiaisonException("MissingFirstCellException","La cellule source n'est pas définie.");
+				case 2 -> throw new LiaisonException("MissingFirstCellException", "La cellule source n'est pas définie.");
 				case 3 -> 
 				throw new LiaisonException("MissingLastCellException" ,"La cellule de destination n'est pas définie.");
 				case 4 -> 
 				throw new LiaisonException
 				("IdenticCellException", "La cellule source est identique à la cellule de destination.");
-
+					
 			}
 
 			if (celSource.getEquipe().getNom().equals("Neutre") ) 
@@ -68,38 +67,37 @@ public class Niveau
 			if (celSource != celDest )
 			{
 				// S'il y a déjà un lien entre les deux cellule, le lien change de sens...
-				if (celSource.getLiaison(celDest.getNom() ) == null)
-				{
 
-					celSource.setSource   (true);
-					celSource.creerLiaison(celDest);
-					System.out.println("Lien crée");
-				}	
+				Liaison lTemp = null;
 				
-				else
+				for (Liaison l : lstLiaisons) 
 				{
-					// ...Uniquement si la cellule destination n'est pas une cellule Neutre
-					if (celDest.getEquipe().getNom().equals("Neutre") ) 
-						throw new LiaisonException("NeutralSourceException", "La cellule source n'appartient à aucune équipe.");
-					
-					celSource.setSource(false);
-					celDest  .setSource(true );
-					System.out.println("Direction du lien modifié");
-					
+					if (celSource == l.getDest() && celDest == l.getSource() )
+					{
+						lTemp = l;
+						// ...Uniquement si la cellule destination n'est pas Neutre
+						if ( celDest.getEquipe().getNom().equals("Neutre") ) 
+							throw new LiaisonException("NeutralSourceException", "La cellule source n'appartient à aucune équipe.");
+						
+						l.echanger();
+						System.out.println("Direction du lien modifié");
+					}					
 				}
-			}
 
+				if (lTemp == null)
+				{
+					this.lstLiaisons.add(new Liaison(celSource, celDest) );
+					System.out.println("Lien crée");
+				}
+			}	
 			
 		} 
 		catch (Exception ex) 
-		{
+		{	
 			System.out.println(ex.getMessage() );
 		}
-
-
-
-
 	}
+			
 
 	public void supprimerLiaison(char nom1, char nom2)
 	{
@@ -114,11 +112,8 @@ public class Niveau
 				if (c.getNom() == nom1 || c.getNom() == nom2)
 				{
 					if (cel1 == null) cel1 = c;
-					else 
-					{
-						System.out.println(cel1.getNom() );
-						cel2 = c;
-					}
+					else              cel2 = c;
+					
 				}
 			}
 
@@ -137,23 +132,33 @@ public class Niveau
 				("IdenticCellException", "La cellule source est la même que la cellule de destination.");
 			}
 
-			if (cel1.getLiaison(cel2.getNom() ) == null) 
+			Liaison lTemp = null;
+			ArrayList<Liaison> lstTemp = new ArrayList<Liaison>();
+
+			for (Liaison l : lstLiaisons) 
+			{
+
+				if (cel1 == l.getSource() && cel2 == l.getDest() ||
+			        cel1 == l.getDest  () && cel2 == l.getSource() )
+				{
+					lTemp = l;
+					lstTemp.remove(l);
+					System.out.println("Lien supprimé");
+
+				}
+			}
+
+			this.lstLiaisons = lstTemp;
+
+			if (lTemp == null) 
 				throw new LiaisonException("NoLinkToCellException", "Il n'existe pas de lien entre les deux cellules.");
 
-			cel1.supprimerLiaison(cel2);
-			cel2.supprimerLiaison(cel1);
-
-			System.out.println("Lien supprimé");
-
-			
 		} 
 
 		catch (Exception ex) 
 		{
 			System.out.println(ex.getMessage() );
 		}
-
-
 	}
 
 	public String toString()
@@ -162,9 +167,11 @@ public class Niveau
 
 		for (int cpt = 0; cpt < tabEquipes.length; cpt++) 
 		{
-			if (tabEquipes[cpt].getLstCellules().size() > 0)
+			if (!tabEquipes[cpt].getLstCellules().isEmpty() )
 				sRet += tabEquipes[cpt].toString() + "\n\n";
 		}
+
+		sRet += this.getLiaisons();
 
 		return sRet;
 	}
@@ -192,6 +199,21 @@ public class Niveau
 		
 		return 0; // Il n'y a pas d'erreur
 	}
+
+	public String getLiaisons()
+	{
+		String sRet = "";
+
+		if (!lstLiaisons.isEmpty() )
+		{
+			sRet += "\n/*----Lien présents entre toutes les cellules-----*/\n\n";
 	
+			for (Liaison l : lstLiaisons) 
+				sRet += l;
+		}
+
+		return sRet;
+
+	}
 
 }
