@@ -1,10 +1,7 @@
 package source;
 
-import source.metier.Liaison;
-import source.metier.Niveau;
-import source.metier.unites.Cellule;
-import source.metier.unites.CelluleAttaque;
-import source.metier.unites.CelluleSoin;
+import source.metier.*;
+import source.metier.unites.*;
 
 public class TestNiveau 
 {
