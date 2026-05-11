@@ -26,7 +26,7 @@ public class TestNiveau
 
 		n1.ajouterCellule("Rouge",Cellule.creerCellule(6, 170) );
 
-		/* --- Test Unitaire des exeptions -- */
+		/* --- Test Unitaire des exceptions -- */
 		/* --- Dans la méthode lierCellule -- */
 
 		n1.lierCellule('Z', 'E'); // La Cellule source n'existe pas
@@ -55,13 +55,12 @@ public class TestNiveau
 		 * Réutiliser la classe Liaison pour permettre ce genre de lien.
 		 * 
 		 */
-	
-		
+
 		System.out.println(n1);
 		 
-		System.out.println("/* ---------------------------------- */");
-		System.out.println("/*     Test avec plusieurs ajouts.    */");
-		System.out.println("/* ---------------------------------- */");
+		System.out.println("/* ----------------------------------*/");
+		System.out.println("/*     Test avec plusieurs ajouts.   */");
+		System.out.println("/* ----------------------------------*/");
 
 		n1.lierCellule('E', 'F');
 		n1.lierCellule('F', 'G');
