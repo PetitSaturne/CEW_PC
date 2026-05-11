@@ -69,7 +69,6 @@ public class TestNiveau
 		System.out.println(n1);
 
 
-		
 	}
 	
 }
