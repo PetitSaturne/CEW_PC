@@ -18,6 +18,8 @@ public class Controleur
 
 		0.1 Finir les commentaire sur les autres classes
 
+		Tes
+
 	*/
 
 	private Vue ihm;
