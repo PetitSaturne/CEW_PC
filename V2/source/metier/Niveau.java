@@ -58,7 +58,7 @@ public class Niveau
 				throw new LiaisonException("MissingLastCellException" ,"La cellule de destination n'est pas définie.");
 				case 4 -> 
 				throw new LiaisonException
-				("IdenticCellException", "La cellule source est la même que la cellule de destination.");
+				("IdenticCellException", "La cellule source est identique à la cellule de destination.");
 
 			}
 
