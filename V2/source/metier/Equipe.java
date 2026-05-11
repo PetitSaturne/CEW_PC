@@ -1,49 +1,55 @@
 package source.metier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 import source.metier.unites.*;
 
 public class Equipe
 {
-	private List<Cellule>                   lstCellule;
 
-	private String nom;
+	/* ---------------------------------- */
+	/*              Attributs             */
+	/* ---------------------------------- */
+
+	private List<Cellule> lstCellule;
+	private String        nom;
 
 	public Equipe(String nom)
 	{
-		this.nom = nom;
-
+		this.nom         = nom;
 		this.lstCellule  = new ArrayList <Cellule>();
 	}
 
-	public Equipe()
-	{
-		this("Neutre");
-	}
+	/* ---------------------------------- */
+	/*             Accesseurs             */
+	/* ---------------------------------- */
 
 	public Cellule getCellule (char nomCellule)
 	{
-		Cellule c = null;
-
 		for (Cellule cellule : this.lstCellule) 
-		
 			if (cellule.getNom() == nomCellule)
-				c = cellule;
+				
+				return cellule;
 
-		return c;
+		return null;
 	}
 
 	public List<Cellule> getLstCellules() { return this.lstCellule       ;}
 	public int           getNbCellules () { return this.lstCellule.size();}  
-	public String        getNom        () { return this.nom        ;}
+	public String        getNom        () { return this.nom              ;}
 
+	/* ---------------------------------- */
+	/*           Autres Méthodes          */
+	/* ---------------------------------- */
+
+	/**
+	 * 
+	 * @param c
+	 */
 
 	public void ajouterCellule(Cellule c)
 	{
-	
 		if (c != null)
 		{
 			this.lstCellule.add(c);
@@ -51,11 +57,20 @@ public class Equipe
 		}
 	}
 
-	public void viderListe()
+	/**
+	 * 
+	 */
+
+	public void supprimerTout()
 	{ 
 		this.lstCellule.removeAll(lstCellule);
 		Cellule.reinitialiserCompteur();
 	}
+
+	/**
+	 * 
+	 * @param c
+	 */
 
 	public void retirerCellule(Cellule c)
 	{
@@ -71,6 +86,10 @@ public class Equipe
 		
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 
 	public String afficherListeCellule()
 	{
@@ -82,6 +101,10 @@ public class Equipe
 
 		return sRet;
 	}
+
+	/**
+	 * 
+	 */
 
 	public String toString()
 	{

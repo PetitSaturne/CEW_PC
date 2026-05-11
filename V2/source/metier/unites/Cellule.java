@@ -28,7 +28,6 @@ public class Cellule
 	public static final int NIVEAU_MAXI       = 6;
 	public static final int PV_MAXI           = 300;
 
-
 	/**
 	 * Ces constantes définissent l'ensembles des valeurs clés correspondantes au changement d'un niveau.
 	 * La {@code Cellule} doit voir son nombre de PV égaler les dites valeurs pour qu'un changement de niveau soit effectuer.
@@ -40,7 +39,6 @@ public class Cellule
 	 *      Une {@code Cellule} instanciée avec 70 PV et de niveau 4 doit atteindre 60 Points de Vie pour repasser au niveau 3. 
 	 */
 
-	
 	public static final int UP_NIVEAU_2 = 15;
 	public static final int UP_NIVEAU_3 = 40;
 	public static final int UP_NIVEAU_4 = 80;
@@ -53,7 +51,6 @@ public class Cellule
 	public static final int DW_NIVEAU_4 = 100;
 	public static final int DW_NIVEAU_5 = 140;
 	
-
 	/* Compteur séquentiel auto-incrémenté */
 
 	protected static int  nbCellule = 0;
@@ -66,6 +63,7 @@ public class Cellule
 	protected int    niveauActuel;
 	protected int    niveauPrc   ;
 	protected int    nbTentacules;
+	protected int    nbLiasonsActives;
 
 
 	/**
@@ -100,8 +98,8 @@ public class Cellule
 	/** 
 	 * Crée une instance de Cellule une fois les paramètres vérifiées
 	 * 
-	 * @param niveauActuel le niveau actuel de la cellule instanciée.
-	 * @param pv           le nombre de PV  de la cellule instanciée.
+	 * @param niveauActuel le niveau actuel de la {@code Cellule} instanciée.
+	 * @param pv           le nombre de PV  de la {@code Cellule} instanciée.
 	 * @see #parametresValide(int, int)
 
 	*/
@@ -111,22 +109,23 @@ public class Cellule
 
 		this.nom = (char) ('A' + Cellule.nbCellule++);
 
-		this.niveauActuel = niveauActuel;
-		this.niveauPrc    = this.niveauActuel;
-		this.pv           = pv;
-		this.capacite     = "Normale";
+		this.niveauActuel     = niveauActuel;
+		this.niveauPrc        = this.niveauActuel;
+		this.pv               = pv;
+		this.nbLiasonsActives = 0;
+		this.capacite         = "Normale";
 
 		this.calibrerPV    ();
 		this.calibrerNiveau();
 
 		
-		//Paramètrage du nombre de tentacules en fonction du niveau de la cellule
+		//Paramétrage du nombre de tentacules en fonction du niveau de la Cellule
 		
 		if (this.niveauActuel <  2                         ) this.nbTentacules = 1;
 		if (this.niveauActuel >= 2 && this.niveauActuel < 5) this.nbTentacules = 2;
 		if (this.niveauActuel >= 5                         ) this.nbTentacules = 3;
 
-		this.equipe = new Equipe(); // Attribué à l'équipe neutre par défaut
+		this.equipe = new Equipe("Neutre"); // Attribué à l'équipe neutre dès la création.
 
 	}
 
@@ -136,18 +135,13 @@ public class Cellule
 
 	public static int getNbCellules() { return Cellule.nbCellule;}
 
-	public int           getPv               ()          { return this.pv                              ;}
-	public char          getNom              ()          { return this.nom                             ;}
-	public int           getNiveau           ()          { return this.niveauActuel                    ;}
-	public int           getNbTentacules     ()          { return this.nbTentacules                    ;}
-
-	/**
-	 * Indique si la Cellule est la source d'une liaison ou non.
-	 * @return {@code true} si la cellule est source d'une liaison. {@code false} dans l'autre cas.
-	 */
-
-	public Equipe        getEquipe           ()          { return this.equipe                          ;}
-	public String        getCapacite         ()          { return this.capacite                        ;}
+	public int    getPv               () { return this.pv             ;}
+	public char   getNom              () { return this.nom            ;}
+	public int    getNiveau           () { return this.niveauActuel   ;}
+	public int    getNbTentacules     () { return this.nbTentacules   ;}
+	public int    getNbLiaisonsActives() {return this.nbLiasonsActives;}
+	public Equipe getEquipe           () { return this.equipe         ;}
+	public String getCapacite         () { return this.capacite       ;}
 	
 	/* ---------------------------------- */
 	/*            Modificateurs           */
@@ -161,14 +155,18 @@ public class Cellule
 		return true;
 	}	
 
+	public void supprimerLiaisonActive() {this.nbLiasonsActives--;}
+	public void ajouterLiaisonActive  () {this.nbLiasonsActives++;}
+
 	/* ---------------------------------- */
 	/*           Autres Méthodes          */
 	/* ---------------------------------- */
 
+	public static void reinitialiserCompteur() { Cellule.nbCellule = 0;}
+
 	protected static boolean parametresValide(int niveauActuel, int pv)
 	{
 		
-
 		if (niveauActuel > Cellule.NIVEAU_MAXI)  return false;
 		if (pv     <= 0 && niveauActuel <= 0  )  return false;
 		
@@ -176,23 +174,31 @@ public class Cellule
 		
 	}
 
-	public static void reinitialiserCompteur() { Cellule.nbCellule = 0;}
+	public String toString()
+	{
+		String sRet = "";
+
+		sRet += "\nCellule "            + this.nom                                +" :\n\n" + 
+		        "Points de vie      : " + this.pv + " (" + this.niveauActuel +")" + "\n"    + 
+				"Équipe             : " + this.equipe.getNom()                    + "\n"    +
+				"Capacité           : " + this.getCapacite  ();
+
+		return sRet;
+	}
+
+	/* ---------------------------------- */
+	/*          Méthodes Privées          */
+	/* ---------------------------------- */
 
 	private void calibrerPV()
 	{
 
-		/*
-		Vérification du nombre de PV rentrée en paramètre et correction si nécessaire :
-
-			//1 Le niveau est 1 et le nombre de pv est supérieur à 15.
-			//2 Le niveau est 2 et le nombre de pv est plus petit que 5 et plus grand que 40  
-			//3 Le niveau est 3 et le nombre de pv est plus petit
-		*/
+		//Vérification du nombre de PV rentrée en paramètre et correction si nécessaire
 
 		int calibrageNiveauPv = 
 
-		(this.niveauActuel == 1 &&  this.pv >  Cellule.UP_NIVEAU_2)                                    ? 0 : //1
-		(this.niveauActuel == 2 && (this.pv <= Cellule.DW_NIVEAU_1 || this.pv > Cellule.UP_NIVEAU_3) ) ? 1 : //2
+		(this.niveauActuel == 1 &&  this.pv >  Cellule.UP_NIVEAU_2)                                    ? 0 : 
+		(this.niveauActuel == 2 && (this.pv <= Cellule.DW_NIVEAU_1 || this.pv > Cellule.UP_NIVEAU_3) ) ? 1 : 
 		(this.niveauActuel == 3 && (this.pv <= Cellule.DW_NIVEAU_2 || this.pv > Cellule.UP_NIVEAU_4) ) ? 2 :	
 		(this.niveauActuel == 4 && (this.pv <= Cellule.DW_NIVEAU_3 || this.pv > Cellule.UP_NIVEAU_5) ) ? 3 : 
 		(this.niveauActuel == 5 && (this.pv <= Cellule.DW_NIVEAU_4 || this.pv > Cellule.UP_NIVEAU_6) ) ? 4 :
@@ -227,15 +233,4 @@ public class Cellule
 
 	}
 
-	public String toString()
-	{
-		String sRet = "";
-
-		sRet += "\nCellule "            + this.nom                                             +" :\n\n" + 
-		        "Points de vie      : " + this.pv + " (" + this.niveauActuel +")"              + "\n"    + 
-				"Équipe             : " + this.equipe.getNom()                                 + "\n"    +
-				"Capacité           : " + this.getCapacite  ();
-
-		return sRet;
-	}
 }

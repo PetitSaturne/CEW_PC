@@ -2,8 +2,6 @@ package source.metier;
 
 import source.metier.unites.Cellule;
 
-// Classe facultative si la fonction de liaison peut être faite dans la classe Cellule
-
 public class Liaison
 {
 	private Cellule celluleSource;
@@ -19,8 +17,16 @@ public class Liaison
 
 	}
 
+	/* ---------------------------------- */
+	/*             Accesseurs             */
+	/* ---------------------------------- */
+
 	public Cellule getSource() { return this.celluleSource;}
 	public Cellule getDest  () { return this.celluleDest  ;}
+
+	/* ---------------------------------- */
+	/*           Autres Méthodes          */
+	/* ---------------------------------- */
 
 	public void echanger()
 	{
@@ -33,9 +39,9 @@ public class Liaison
 	
 	public String toString()
 	{
-		return this.celluleSource.getNom()         + " de " + this.celluleSource.getEquipe().getNom() + 
-			   " est la source du lien avec "      + 
-			   this.celluleDest  .getNom()         + " de " + this.celluleDest  .getEquipe().getNom() + "\n";
+		return this.celluleSource.getNom()    + " de " + this.celluleSource.getEquipe().getNom() + 
+			   " est la source du lien avec " + 
+			   this.celluleDest  .getNom()    + " de " + this.celluleDest  .getEquipe().getNom() + "\n";
 	}
 
 }

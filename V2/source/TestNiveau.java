@@ -9,7 +9,20 @@ public class TestNiveau
 	{
 		Niveau n1 = new Niveau();
 
-		
+
+		System.out.println("/* ---------------------------------- */");
+		System.out.println("/*       Test d'ajouts d'Équipe       */");
+		System.out.println("/* ---------------------------------- */");
+
+		n1.ajouterEquipe(new Equipe("Neutre") );
+		n1.ajouterEquipe(new Equipe("Neutre") );
+		n1.ajouterEquipe(new Equipe("Joueur") );
+		n1.ajouterEquipe(new Equipe("Rouge" ) );
+		n1.ajouterEquipe(new Equipe("Rose"  ) );
+		n1.ajouterEquipe(new Equipe("Orange") );
+
+		System.out.println();
+
 		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
 		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
 		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
@@ -25,22 +38,25 @@ public class TestNiveau
 		n1.ajouterCellule("Rouge",Cellule.creerCellule(6, 170) );
 
 		/* --- Test Unitaire des exceptions -- */
-		/* --- Dans la méthode lierCellule -- */
+		/* --- Dans la méthode relierCellule -- */
 
+		System.out.println();
+		
 		System.out.println("/* ---------------------------------- */");
 		System.out.println("/*           Test de Liaison          */");
 		System.out.println("/* ---------------------------------- */");
+		System.out.println();
 
-		n1.lierCellule('Z', 'E'); // La Cellule source n'existe pas
-		n1.lierCellule('E', 'Z'); // La cellule de destination n'existe pas
-		n1.lierCellule('Z', 'P'); // Les deux cellules n'existent pas 
+		n1.relierCellule('Z', 'E'); // La Cellule source n'existe pas
+		n1.relierCellule('E', 'Z'); // La cellule de destination n'existe pas
+		n1.relierCellule('Z', 'P'); // Les deux cellules n'existent pas 
 
-		n1.lierCellule('A', 'E'); // La cellule source est neutre
-		n1.lierCellule('A', 'A'); // Les deux cellules sont identiques
+		n1.relierCellule('A', 'E'); // La cellule source est neutre
+		n1.relierCellule('A', 'A'); // Les deux cellules sont identiques
 
-		n1.lierCellule('E', 'A'); // Liaison réussie.
+		n1.relierCellule('E', 'A'); // Liaison réussie.
 
-		System.out.println(n1.getLiaisons() );
+		System.out.println(n1.getDetailsLiaisons() );
 		
 		/* --- Test Unitaire des exceptions ------ */
 		/* --- Dans la méthode supprimerLiaison -- */
@@ -49,26 +65,38 @@ public class TestNiveau
 		System.out.println("/*         Test de Suppression        */");
 		System.out.println("/* ---------------------------------- */");
 
+		System.out.println();
+
 		n1.supprimerLiaison('E', 'Z'); // La Cellule n°2 n'existe pas
 		n1.supprimerLiaison('Z', 'P'); // Les deux Cellules n'existent pas
 		n1.supprimerLiaison('E', 'A'); // Suppression de la liaison
 		n1.supprimerLiaison('E', 'A'); // La liaison n'existe plus.
 
-		System.out.println(n1.getLiaisons() );
+		System.out.println(n1.getDetailsLiaisons() );
 		 
 		System.out.println("/* ----------------------------------*/");
-		System.out.println("/*     Test avec ajouts Complexe   */");
+		System.out.println("/*     Test avec ajouts Complexe     */");
 		System.out.println("/* ----------------------------------*/");
+		System.out.println();
 
-		n1.lierCellule('E', 'F'); // Ici F est à la fois source
-		n1.lierCellule('F', 'G'); // Et destination.
-		System.out.println(n1.getLiaisons() );
+		n1.relierCellule('E', 'F'); // Ici F est à la fois source
+		n1.relierCellule('F', 'G'); // Et destination.
+		System.out.println(n1.getDetailsLiaisons() );
 
-		n1.lierCellule('G', 'F'); // Inversion du sens de la liaison
-		System.out.println(n1.getLiaisons() );
+		n1.relierCellule('G', 'F'); // Inversion du sens de la liaison
+		System.out.println(n1.getDetailsLiaisons() );
 
-		n1.lierCellule('E', 'A');
-		n1.lierCellule('A', 'E'); // Inversion impossible car 'A' est neutre.
+		n1.relierCellule('E', 'A');
+		n1.relierCellule('A', 'E'); // Inversion impossible car 'A' est neutre.
+
+		n1.viderLiaison();
+
+		System.out.println("/* ---------------------------------- */");
+		System.out.println("/*     Test d'ajouts inter-équipes    */");
+		System.out.println("/* ---------------------------------- */");
+
+		n1.relierCellule('E', 'I');
+		n1.relierCellule('E', 'D');
 		
 	}
 	

@@ -8,7 +8,7 @@ public class TestEquipe
 	public static void main(String[] args) 
 	{
 		Equipe joueur, advRouge;
-		joueur   = new Equipe();
+		joueur   = new Equipe("Neutre");
 		advRouge = new Equipe("Rouge");
 
 		//joueur.ajouterCellule(null  , 2, 20, joueur);
@@ -57,7 +57,7 @@ public class TestEquipe
 		System.out.println(joueur.afficherListeCellule() );
 
 		System.out.println("\n Test d'ajout des PV en fonction du niveau");
-		joueur.viderListe();
+		joueur.supprimerTout();
 
 		//joueur.ajouterCellule(null, 1, 0, advRouge);
 		//joueur.ajouterCellule(null, 7, 0, advRouge);

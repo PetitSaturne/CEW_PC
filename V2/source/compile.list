@@ -5,6 +5,7 @@
 ./metier/unites/CelluleBonus.java
 
 ./metier/exceptions/LiaisonException.java
+./metier/exceptions/AjoutException.java
 
 ./metier/Equipe.java
 ./metier/Liaison.java

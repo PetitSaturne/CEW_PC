@@ -8,35 +8,103 @@ import java.util.ArrayList;
 import source.metier.exceptions.*;
 
 public class Niveau
-{
-	private Equipe[]      tabEquipes;
+{ 
+	private List<Equipe>  lstEquipes;
 	private List<Liaison> lstLiaisons;
-
+	
 	public Niveau()
 	{
-		this.instancierEquipe();
-
+		this.lstEquipes  = new ArrayList<Equipe >();
 		this.lstLiaisons = new ArrayList<Liaison>();
 	}
 
+	/* ---------------------------------- */
+	/*              Acceseurs             */
+	/* ---------------------------------- */
+
+	/**
+	 * 
+	 * @return
+	 */
+
+	public String getDetailsLiaisons()
+	{
+		String sRet = "";
+
+		if (!lstLiaisons.isEmpty() )
+		{
+			sRet += "\n/*----Lien présents entre toutes les cellules-----*/\n\n";
+	
+			for (Liaison l : lstLiaisons) 
+				sRet += l;
+		}
+		return sRet;
+	}
+
+	/* ---------------------------------- */
+	/*           Autres Méthodes          */
+	/* ---------------------------------- */
+
+	public void ajouterEquipe(Equipe e)
+	{
+		try 
+		{
+			for (Equipe eq : lstEquipes) 
+			{
+				if (eq.getNom().equals(e.getNom() ) ) 
+					throw new AjoutException("ExistingTeamException", "L'équipe " + e.getNom() + " existe déjà.");
+	
+			}
+
+			this.lstEquipes.add(e);
+			System.out.println("Équipe " + e.getNom() + " ajoutée.");
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println(ex.getMessage() + "\n" );
+		}
+	}
+
+	/**
+	 * 
+	 * @param nomEquipe
+	 * @param c
+	 */
+
 	public void ajouterCellule(String nomEquipe, Cellule c)
 	{
-		if (c != null)
 
-			for (int cpt = 0; cpt < tabEquipes.length; cpt++) 
-				if (tabEquipes[cpt].getNom().equals(nomEquipe) )
-
-					tabEquipes[cpt].ajouterCellule(c);
+		try 
+		{
+			if (c == null) throw new AjoutException("NullCellException", "La cellule en paramètre n'est pas définie.");
+	
+			for (Equipe e : this.lstEquipes) 
+				if (e.getNom().equals(nomEquipe) )
+				{
+					e.ajouterCellule(c);	
+					System.out.println("Cellule ajoutée à " +  e.getNom() + ".");
+				}
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.getMessage() );
+		}
 		
 	}
 
-	public void lierCellule(char de, char vers)
+	/**
+	 * 
+	 * @param de
+	 * @param vers
+	 */
+
+	public void relierCellule(char de, char vers)
 	{
 		Cellule celSource, celDest;
 
 		celSource = celDest = null;
 
-		for (Equipe equipe : tabEquipes) 
+		for (Equipe equipe : lstEquipes) 
 
 			for (Cellule c : equipe.getLstCellules() ) 
 			{
@@ -97,6 +165,12 @@ public class Niveau
 			System.out.println(ex.getMessage() );
 		}
 	}
+
+	/**
+	 * 
+	 * @param nom1
+	 * @param nom2
+	 */
 			
 
 	public void supprimerLiaison(char nom1, char nom2)
@@ -106,7 +180,7 @@ public class Niveau
 
 		cel1 = cel2 = null;
 
-		for (Equipe equipe : tabEquipes) 
+		for (Equipe equipe : lstEquipes) 
 			for (Cellule c : equipe.getLstCellules() ) 
 			{
 				if (c.getNom() == nom1 || c.getNom() == nom2)
@@ -124,7 +198,7 @@ public class Niveau
 			{
 				case 1 -> 
 				throw new LiaisonException("BothNullElementsException",
-				"Les cellules n°1 et 2 ne sont pas définies." );
+				"Les cellules n°1 et n°2 ne sont pas définies." );
 				case 3 -> 
 				throw new LiaisonException("MissingLastCellException" ,"La deuxième cellule n'est pas définie.");
 				case 4 -> 
@@ -151,7 +225,7 @@ public class Niveau
 			this.lstLiaisons = lstTemp;
 
 			if (lTemp == null) 
-				throw new LiaisonException("NoLinkToCellException", "Il n'existe pas de lien entre les deux cellules.");
+				throw new LiaisonException("NoLinkToCellException", "Aucun lien identifié entre ces deux cellules.");
 
 		} 
 
@@ -161,33 +235,38 @@ public class Niveau
 		}
 	}
 
+	public void viderLiaison()
+	{
+		this.lstLiaisons.removeAll(lstLiaisons);
+	}
+
 	public String toString()
 	{
 		String sRet = "";
 
-		for (int cpt = 0; cpt < tabEquipes.length; cpt++) 
+		for (Equipe e : this.lstEquipes) 
 		{
-			if (!tabEquipes[cpt].getLstCellules().isEmpty() )
-				sRet += tabEquipes[cpt].toString() + "\n\n";
+			if (!e.getLstCellules().isEmpty() )
+				sRet += e + "\n\n";
 		}
 
-		sRet += this.getLiaisons();
+		sRet += this.getDetailsLiaisons();
 
 		return sRet;
 	}
 	
-	private void instancierEquipe()
-	{
-		
-		this.tabEquipes = new Equipe[5];
 
-		this.tabEquipes[0] = new Equipe();                   // Equipe Neutre
-		this.tabEquipes[1] = new Equipe("Joueur");
-		this.tabEquipes[2] = new Equipe("Rouge" );
-		this.tabEquipes[3] = new Equipe("Rose"  );
-		this.tabEquipes[4] = new Equipe("Orange");
+	/* ---------------------------------- */
+	/*     Méthodes Privées/Protégées     */
+	/* ---------------------------------- */
+	
 
-	}
+	/**
+	 * 
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
 
 	private int gererException(Cellule c1, Cellule c2)
 	{
@@ -198,22 +277,6 @@ public class Niveau
 		if (c1 == c2)                 return 4; // La Cellule 1 et 2 sont identiques.
 		
 		return 0; // Il n'y a pas d'erreur
-	}
-
-	public String getLiaisons()
-	{
-		String sRet = "";
-
-		if (!lstLiaisons.isEmpty() )
-		{
-			sRet += "\n/*----Lien présents entre toutes les cellules-----*/\n\n";
-	
-			for (Liaison l : lstLiaisons) 
-				sRet += l;
-		}
-
-		return sRet;
-
 	}
 
 }
