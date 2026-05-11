@@ -35,12 +35,36 @@ public class Niveau
 		{
 			sRet += "\n/*----Lien présents entre toutes les cellules-----*/\n\n";
 	
-			for (Liaison l : lstLiaisons) 
+			for (Liaison l : this.lstLiaisons) 
 				sRet += l;
+
+			sRet += "\n\n/* -- Liaisons Actives par Cellule -- */\n\n";
+			for (Equipe e : lstEquipes) 
+			{
+				for (Cellule c : e.getLstCellules() ) 
+				{
+					if (c.getNbLiaisonsActives() > 0 )
+						sRet += c.getNom()  + " effectue "  + c.getNbLiaisonsActives() +
+										"/" +                 c.getNbTentacules     () + " liaisons actives.\n";	
+				}
+			}
+
 		}
+		sRet += "\n";
+		
+
 		return sRet;
 	}
 
+	public Equipe getEquipe(String nomEquipe)
+	{
+		for (Equipe e : this.lstEquipes) 
+			if (e.getNom() == nomEquipe)
+			
+				return e;
+
+		return null;
+	}
 	/* ---------------------------------- */
 	/*           Autres Méthodes          */
 	/* ---------------------------------- */
@@ -82,7 +106,7 @@ public class Niveau
 				if (e.getNom().equals(nomEquipe) )
 				{
 					e.ajouterCellule(c);	
-					System.out.println("Cellule ajoutée à " +  e.getNom() + ".");
+					System.out.println("Cellule " + c.getNom() + " ajoutée à " +  e.getNom() + ".");
 				}
 		} 
 		catch (Exception e) 
@@ -147,14 +171,28 @@ public class Niveau
 						if ( celDest.getEquipe().getNom().equals("Neutre") ) 
 							throw new LiaisonException("NeutralSourceException", "La cellule source n'appartient à aucune équipe.");
 						
+						if (!celSource.lienPossible() )
+							throw new LiaisonException("TooManyLinksException", "La Cellule source possède trop de liens existants.");
+						
+
 						l.echanger();
 						System.out.println("Direction du lien modifié");
+						celDest.supprimerLiaisonActive();
+						celSource.ajouterLiaisonActive();
+						
 					}					
 				}
+				// On vérifie également que le nombre de liaisons restantes sur la Cellule Dest est valide.
 
-				if (lTemp == null)
+				if (lTemp == null )
 				{
+
+					if (!celSource.lienPossible() )
+						throw new LiaisonException("TooManyLinksException", "La Cellule source possède trop de liens existants.");
+
 					this.lstLiaisons.add(new Liaison(celSource, celDest) );
+
+					celSource.ajouterLiaisonActive();
 					System.out.println("Lien crée");
 				}
 			}	
@@ -216,6 +254,7 @@ public class Niveau
 			        cel1 == l.getDest  () && cel2 == l.getSource() )
 				{
 					lTemp = l;
+					l.getSource().supprimerLiaisonActive();
 					lstTemp.remove(l);
 					System.out.println("Lien supprimé");
 
@@ -237,6 +276,15 @@ public class Niveau
 
 	public void viderLiaison()
 	{
+
+		for (Liaison l : this.lstLiaisons) 
+		{
+			Cellule cSource = l.getSource();
+			
+			while (cSource.getNbLiaisonsActives() > 0)
+				cSource.supprimerLiaisonActive();
+		}
+
 		this.lstLiaisons.removeAll(lstLiaisons);
 	}
 

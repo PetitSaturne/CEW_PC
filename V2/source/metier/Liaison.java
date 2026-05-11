@@ -39,9 +39,9 @@ public class Liaison
 	
 	public String toString()
 	{
-		return this.celluleSource.getNom()    + " de " + this.celluleSource.getEquipe().getNom() + 
-			   " est la source du lien avec " + 
-			   this.celluleDest  .getNom()    + " de " + this.celluleDest  .getEquipe().getNom() + "\n";
+		return this.celluleSource.getNom()      + " de " + this.celluleSource.getEquipe().getNom() + 
+			   " est la source d'un lien vers " + 
+			   this.celluleDest  .getNom()      + " de " + this.celluleDest  .getEquipe().getNom() + "\n";
 	}
 
 }

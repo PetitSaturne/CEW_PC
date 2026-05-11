@@ -174,6 +174,8 @@ public class Cellule
 		
 	}
 
+	public boolean lienPossible() { return this.nbLiasonsActives < this.nbTentacules && this.nbLiasonsActives >= 0;}
+
 	public String toString()
 	{
 		String sRet = "";

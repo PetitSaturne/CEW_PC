@@ -14,28 +14,29 @@ public class TestNiveau
 		System.out.println("/*       Test d'ajouts d'Équipe       */");
 		System.out.println("/* ---------------------------------- */");
 
-		n1.ajouterEquipe(new Equipe("Neutre") );
-		n1.ajouterEquipe(new Equipe("Neutre") );
-		n1.ajouterEquipe(new Equipe("Joueur") );
-		n1.ajouterEquipe(new Equipe("Rouge" ) );
-		n1.ajouterEquipe(new Equipe("Rose"  ) );
-		n1.ajouterEquipe(new Equipe("Orange") );
+		n1.ajouterEquipe(new Equipe("Neutre") ); // Ajout
+		n1.ajouterEquipe(new Equipe("Neutre") ); // Neutre existe déjà, non ajoutée.
+		n1.ajouterEquipe(new Equipe("Joueur") ); // Ajout
+		n1.ajouterEquipe(new Equipe("Rouge" ) ); // Ajout
+		n1.ajouterEquipe(new Equipe("Rose"  ) ); // Ajout
+		n1.ajouterEquipe(new Equipe("Orange") ); // Ajout
 
 		System.out.println();
 
-		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
-		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
-		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
-		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) );
+		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) ); // A
+		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) ); // B
+		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) ); // C
+		n1.ajouterCellule("Neutre", Cellule.creerCellule(1, 3) ); // D
+		System.out.println();
 
-		n1.ajouterCellule("Joueur", CelluleSoin.creerCellule(0, 40) );
+		n1.ajouterCellule("Joueur", CelluleSoin   .creerCellule(0, 40) ); // E
+		n1.ajouterCellule("Joueur", CelluleAttaque.creerCellule(0, 20) ); // F
+		n1.ajouterCellule("Joueur", Cellule       .creerCellule(0, 9 ) ); // G
+		n1.ajouterCellule("Joueur", CelluleSoin   .creerCellule(0, 80) ); // H
+		System.out.println();
 
-
-		n1.ajouterCellule("Joueur", CelluleAttaque.creerCellule(0, 20) );
-		n1.ajouterCellule("Joueur", Cellule       .creerCellule(0, 9 ) );
-		n1.ajouterCellule("Joueur", CelluleSoin   .creerCellule(0, 80) );
-
-		n1.ajouterCellule("Rouge",Cellule.creerCellule(6, 170) );
+		n1.ajouterCellule("Rouge",Cellule.creerCellule(6, 170) ); // I
+		System.out.println();
 
 		/* --- Test Unitaire des exceptions -- */
 		/* --- Dans la méthode relierCellule -- */
@@ -75,28 +76,51 @@ public class TestNiveau
 		System.out.println(n1.getDetailsLiaisons() );
 		 
 		System.out.println("/* ----------------------------------*/");
-		System.out.println("/*     Test avec ajouts Complexe     */");
+		System.out.println("/*     Test avec ajouts complexes    */");
 		System.out.println("/* ----------------------------------*/");
 		System.out.println();
 
 		n1.relierCellule('E', 'F'); // Ici F est à la fois source
-		n1.relierCellule('F', 'G'); // Et destination.
-		System.out.println(n1.getDetailsLiaisons() );
 
+		n1.relierCellule('F', 'G'); // Et destination.
 		n1.relierCellule('G', 'F'); // Inversion du sens de la liaison
-		System.out.println(n1.getDetailsLiaisons() );
+		n1.relierCellule('F', 'G'); // Inversion du sens de la liaison
+		n1.relierCellule('G', 'F'); // Inversion du sens de la liaison
 
 		n1.relierCellule('E', 'A');
 		n1.relierCellule('A', 'E'); // Inversion impossible car 'A' est neutre.
+		System.out.println(n1.getDetailsLiaisons() );
+		
 
 		n1.viderLiaison();
+
+		System.out.println("/* ---------------------------------- */");
+		System.out.println("/*     Test d'ajouts triangulaire     */");
+		System.out.println("/* ---------------------------------- */");
+
+		n1.relierCellule('E', 'F');
+		n1.relierCellule('F', 'G');
+		n1.relierCellule('G', 'E');
+		n1.relierCellule('G', 'A');
+
+		System.out.println(n1.getDetailsLiaisons() );
+
 
 		System.out.println("/* ---------------------------------- */");
 		System.out.println("/*     Test d'ajouts inter-équipes    */");
 		System.out.println("/* ---------------------------------- */");
 
+		n1.viderLiaison();
+
+		n1.relierCellule('E', 'A');		
+		n1.relierCellule('E', 'I');		
+		n1.relierCellule('I', 'D');		
+		n1.relierCellule('I', 'A');		
+		n1.relierCellule('I', 'B');
+		n1.relierCellule('I', 'B');
 		n1.relierCellule('E', 'I');
-		n1.relierCellule('E', 'D');
+		
+		System.out.println(n1.getDetailsLiaisons() );
 		
 	}
 	
