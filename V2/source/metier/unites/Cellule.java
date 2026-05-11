@@ -68,10 +68,6 @@ public class Cellule
 	protected int    nbTentacules;
 
 
-	protected boolean source;
-
-	protected List<Cellule> liaisons;
-
 	/**
 	 * Utilisation d'une factory afin de contrôler les valeurs rentrées en paramètres.
 	 * Le nombre de PV d'une cellule doit être scrupuleusement respecté.
@@ -120,10 +116,6 @@ public class Cellule
 		this.pv           = pv;
 		this.capacite     = "Normale";
 
-		this.source       = false;
-		
-		this.liaisons = new ArrayList<Cellule>();
-
 		this.calibrerPV    ();
 		this.calibrerNiveau();
 
@@ -147,31 +139,21 @@ public class Cellule
 	public int           getPv               ()          { return this.pv                              ;}
 	public char          getNom              ()          { return this.nom                             ;}
 	public int           getNiveau           ()          { return this.niveauActuel                    ;}
-	public int           getNbLiaisonsActive ()          { return this.liaisons.size()                 ;}
 	public int           getNbTentacules     ()          { return this.nbTentacules                    ;}
 
 	/**
 	 * Indique si la Cellule est la source d'une liaison ou non.
 	 * @return {@code true} si la cellule est source d'une liaison. {@code false} dans l'autre cas.
 	 */
-	public boolean       estSource           ()          { return this.source                          ;}
 
-	public List<Cellule> getLstLiaisons      ()          { return new ArrayList<Cellule>(this.liaisons);}
 	public Equipe        getEquipe           ()          { return this.equipe                          ;}
 	public String        getCapacite         ()          { return this.capacite                        ;}
 	
-	/**
-	 * 
-	 * @param cLien Le nom de l'autre {@code Cellule}.
-	 * @return Une {@code Cellule} si un lien est trouvé avec une autre {@code Cellule}. 
-	 */
-	public Cellule       getLiaison          (char cLien) 
-	{ 
-		if (this.estEnLienAvec(cLien) == -1 ) return null;
-		return this.liaisons.get(this.estEnLienAvec(cLien) );
-	}
 
-	public String getDetailLiaisons()
+	/* ----- à déplacer dans Niveau ----- */
+
+
+	/*public String getDetailLiaisons()
 	{
 		String sRet = "";
 
@@ -185,7 +167,7 @@ public class Cellule
 		
 		
 		return sRet;
-	}
+	}*/
 
 
 	/* ---------------------------------- */
@@ -198,9 +180,7 @@ public class Cellule
 
 		this.equipe = e;
 		return true;
-	}
-
-	public void setSource(boolean b) {this.source = b;}
+	}	
 
 	/* ---------------------------------- */
 	/*           Autres Méthodes          */
@@ -223,7 +203,10 @@ public class Cellule
 	 * @ {@code true} si un lien a été crée. {@code false} dans l'autre cas.
 	 */
 
-	public boolean creerLiaison(Cellule c)
+	/* ----- à déplacer dans Niveau ----- */
+
+
+	/*public boolean creerLiaison(Cellule c)
 	{
 		if (c == null )                                    return false;
 		if (this.nbTentacules > Cellule.NB_TENTACULE_MAXI) return false;
@@ -233,15 +216,17 @@ public class Cellule
 		 
 		return true;
 
-	}
+	}*/
 
 	/** Supprime le lien bidirectionnel avec la Cellule fournie en paramètre
 	 * 
 	 * @param c l'autre Cellule a laquelle supprimer le lien.
 	 */
 
+	/* ----- à déplacer dans Niveau ----- */
 
-	public void supprimerLiaison(Cellule c)
+
+	/*public void supprimerLiaison(Cellule c)
 	{
 
 		List<Cellule> lstTemp = new ArrayList<Cellule> (this.liaisons);
@@ -257,11 +242,14 @@ public class Cellule
 		
 		this.liaisons = lstTemp;
 
-	}
+	}*/
 
 	public static void reinitialiserCompteur() { Cellule.nbCellule = 0;}
 
-	private int estEnLienAvec(char cLien)
+	/* ----- à déplacer dans Niveau ----- */
+
+
+	/*private int estEnLienAvec(char cLien)
 	{
 
 		int iTemp = -1;
@@ -273,41 +261,41 @@ public class Cellule
 		
 		return iTemp;
 	}
-
+		*/
 	private void calibrerPV()
 	{
 
 		/*
-			Vérification du nombre de PV rentrée en paramètre et correction si nécessaire :
+		Vérification du nombre de PV rentrée en paramètre et correction si nécessaire :
 
-				//1 Le niveau est 1 et le nombre de pv est supérieur à 15.
-				//2 Le niveau est 2 et le nombre de pv est plus petit que 5 et plus grand que 40  
-				//3 Le niveau est 3 et le nombre de pv est plus petit
-			*/
+			//1 Le niveau est 1 et le nombre de pv est supérieur à 15.
+			//2 Le niveau est 2 et le nombre de pv est plus petit que 5 et plus grand que 40  
+			//3 Le niveau est 3 et le nombre de pv est plus petit
+		*/
 
-			int calibrageNiveauPv = 
+		int calibrageNiveauPv = 
 
-			(this.niveauActuel == 1 &&  this.pv >  Cellule.UP_NIVEAU_2)                                    ? 0 : //1
-			(this.niveauActuel == 2 && (this.pv <= Cellule.DW_NIVEAU_1 || this.pv > Cellule.UP_NIVEAU_3) ) ? 1 : //2
-			(this.niveauActuel == 3 && (this.pv <= Cellule.DW_NIVEAU_2 || this.pv > Cellule.UP_NIVEAU_4) ) ? 2 :	
-			(this.niveauActuel == 4 && (this.pv <= Cellule.DW_NIVEAU_3 || this.pv > Cellule.UP_NIVEAU_5) ) ? 3 : 
-			(this.niveauActuel == 5 && (this.pv <= Cellule.DW_NIVEAU_4 || this.pv > Cellule.UP_NIVEAU_6) ) ? 4 :
-			(this.niveauActuel == 6 && (this.pv <= Cellule.DW_NIVEAU_5)|| this.pv > Cellule.PV_MAXI )      ? 5 : -1;
+		(this.niveauActuel == 1 &&  this.pv >  Cellule.UP_NIVEAU_2)                                    ? 0 : //1
+		(this.niveauActuel == 2 && (this.pv <= Cellule.DW_NIVEAU_1 || this.pv > Cellule.UP_NIVEAU_3) ) ? 1 : //2
+		(this.niveauActuel == 3 && (this.pv <= Cellule.DW_NIVEAU_2 || this.pv > Cellule.UP_NIVEAU_4) ) ? 2 :	
+		(this.niveauActuel == 4 && (this.pv <= Cellule.DW_NIVEAU_3 || this.pv > Cellule.UP_NIVEAU_5) ) ? 3 : 
+		(this.niveauActuel == 5 && (this.pv <= Cellule.DW_NIVEAU_4 || this.pv > Cellule.UP_NIVEAU_6) ) ? 4 :
+		(this.niveauActuel == 6 && (this.pv <= Cellule.DW_NIVEAU_5)|| this.pv > Cellule.PV_MAXI )      ? 5 : -1;
 
-			if (calibrageNiveauPv == -1) this.niveauActuel = 1;
+		if (calibrageNiveauPv == -1) this.niveauActuel = 1;
 
-			this.pv = switch (calibrageNiveauPv) 
-			{
-				case 0 -> (int) (Math.random() * (Cellule.UP_NIVEAU_2 -1)                                             + 1 );
-				case 1 -> (int) (Math.random() * (Cellule.UP_NIVEAU_3 - Cellule.UP_NIVEAU_2 -1) + Cellule.DW_NIVEAU_1 + 1 ); 
-				case 2 -> (int) (Math.random() * (Cellule.UP_NIVEAU_4 - Cellule.DW_NIVEAU_2 -1) + Cellule.DW_NIVEAU_2 + 1 );
-				case 3 -> (int) (Math.random() * (Cellule.UP_NIVEAU_5 - Cellule.DW_NIVEAU_3 -1) + Cellule.DW_NIVEAU_3 + 1 );
-				case 4 -> (int) (Math.random() * (Cellule.UP_NIVEAU_6 - Cellule.DW_NIVEAU_4 -1) + Cellule.DW_NIVEAU_4 + 1 );
-				case 5 -> (int) (Math.random() * (Cellule.PV_MAXI     - Cellule.DW_NIVEAU_5 -1) + Cellule.DW_NIVEAU_5 + 1 );
-				
-				default -> pv;
+		this.pv = switch (calibrageNiveauPv) 
+		{
+			case 0 -> (int) (Math.random() * (Cellule.UP_NIVEAU_2 -1)                                             + 1 );
+			case 1 -> (int) (Math.random() * (Cellule.UP_NIVEAU_3 - Cellule.UP_NIVEAU_2 -1) + Cellule.DW_NIVEAU_1 + 1 ); 
+			case 2 -> (int) (Math.random() * (Cellule.UP_NIVEAU_4 - Cellule.DW_NIVEAU_2 -1) + Cellule.DW_NIVEAU_2 + 1 );
+			case 3 -> (int) (Math.random() * (Cellule.UP_NIVEAU_5 - Cellule.DW_NIVEAU_3 -1) + Cellule.DW_NIVEAU_3 + 1 );
+			case 4 -> (int) (Math.random() * (Cellule.UP_NIVEAU_6 - Cellule.DW_NIVEAU_4 -1) + Cellule.DW_NIVEAU_4 + 1 );
+			case 5 -> (int) (Math.random() * (Cellule.PV_MAXI     - Cellule.DW_NIVEAU_5 -1) + Cellule.DW_NIVEAU_5 + 1 );
 			
-			};
+			default -> pv;
+		
+		};
 
 	}
 
@@ -331,7 +319,6 @@ public class Cellule
 
 		sRet += "\nCellule "            + this.nom                                             +" :\n\n" + 
 		        "Points de vie      : " + this.pv + " (" + this.niveauActuel +")"              + "\n"    + 
-		        "Nombre de liaisons : " + this.getNbLiaisonsActive() +"/"  + this.nbTentacules + "\n"    +  
 				"Équipe             : " + this.equipe.getNom()                                 + "\n"    +
 				"Capacité           : " + this.getCapacite  ();
 
