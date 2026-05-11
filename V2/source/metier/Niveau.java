@@ -57,7 +57,7 @@ public class Niveau
 				case 4 -> 
 				throw new LiaisonException
 				("IdenticCellException", "La cellule source est la même que la cellule de destination.");
-					
+
 			}
 
 			if (celSource.getEquipe().getNom().equals("Neutre") ) 
