@@ -52,8 +52,10 @@ public class Niveau
 				case 1 -> 
 				throw new LiaisonException("BothNullElementsException",
 				"Les cellules source et de destination ne sont pas définies." );
+				case 2 -> 
+				throw new LiaisonException("MissingFirstCellException","La cellule source n'est pas définie.");
 				case 3 -> 
-				throw new LiaisonException("MissingLastCellException" ,"La deuxième cellule n'est pas définie.");
+				throw new LiaisonException("MissingLastCellException" ,"La cellule de destination n'est pas définie.");
 				case 4 -> 
 				throw new LiaisonException
 				("IdenticCellException", "La cellule source est la même que la cellule de destination.");
@@ -128,8 +130,6 @@ public class Niveau
 				case 1 -> 
 				throw new LiaisonException("BothNullElementsException",
 				"Les cellules n°1 et 2 ne sont pas définies." );
-				case 2 -> 
-				throw new LiaisonException("MissingFirstCellException","La première cellule n'est pas définie.");
 				case 3 -> 
 				throw new LiaisonException("MissingLastCellException" ,"La deuxième cellule n'est pas définie.");
 				case 4 -> 
