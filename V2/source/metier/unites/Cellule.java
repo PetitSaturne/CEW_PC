@@ -149,27 +149,6 @@ public class Cellule
 	public Equipe        getEquipe           ()          { return this.equipe                          ;}
 	public String        getCapacite         ()          { return this.capacite                        ;}
 	
-
-	/* ----- à déplacer dans Niveau ----- */
-
-
-	/*public String getDetailLiaisons()
-	{
-		String sRet = "";
-
-		for (Cellule c : liaisons) 
-		{
-			sRet += this.getNom   () + " de "   + this.equipe.getNom() + " est la "       + 
-			       (this.estSource() ? "source" : "destination"      ) + " du lien avec " +
-			        c   .getNom   () + " de "   + c   .equipe.getNom() + "\n"; 
-
-		}
-		
-		
-		return sRet;
-	}*/
-
-
 	/* ---------------------------------- */
 	/*            Modificateurs           */
 	/* ---------------------------------- */
@@ -197,71 +176,8 @@ public class Cellule
 		
 	}
 
-	/** Crée un lien bidirectionnel avec la Cellule fournie en paramètre
-	 * 
-	 * @param c l'autre Cellule a laquelle effectuer un lien.
-	 * @ {@code true} si un lien a été crée. {@code false} dans l'autre cas.
-	 */
-
-	/* ----- à déplacer dans Niveau ----- */
-
-
-	/*public boolean creerLiaison(Cellule c)
-	{
-		if (c == null )                                    return false;
-		if (this.nbTentacules > Cellule.NB_TENTACULE_MAXI) return false;
-
-		this.liaisons.add(c   );
-		c   .liaisons.add(this);
-		 
-		return true;
-
-	}*/
-
-	/** Supprime le lien bidirectionnel avec la Cellule fournie en paramètre
-	 * 
-	 * @param c l'autre Cellule a laquelle supprimer le lien.
-	 */
-
-	/* ----- à déplacer dans Niveau ----- */
-
-
-	/*public void supprimerLiaison(Cellule c)
-	{
-
-		List<Cellule> lstTemp = new ArrayList<Cellule> (this.liaisons);
-
-		for (Cellule cellule : liaisons) 	
-		{
-			if (cellule == c)
-			{
-				lstTemp.remove(cellule);
-			}
-			
-		}
-		
-		this.liaisons = lstTemp;
-
-	}*/
-
 	public static void reinitialiserCompteur() { Cellule.nbCellule = 0;}
 
-	/* ----- à déplacer dans Niveau ----- */
-
-
-	/*private int estEnLienAvec(char cLien)
-	{
-
-		int iTemp = -1;
-
-		for (Cellule cellule : liaisons) 
-			if (cellule.getNom() == cLien )
-
-				iTemp = liaisons.indexOf(cellule);
-		
-		return iTemp;
-	}
-		*/
 	private void calibrerPV()
 	{
 
@@ -310,8 +226,6 @@ public class Cellule
 		if (this.pv >= Cellule.UP_NIVEAU_6                                 ) this.niveauActuel = 6;
 
 	}
-
-
 
 	public String toString()
 	{
