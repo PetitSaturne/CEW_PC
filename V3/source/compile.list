@@ -16,4 +16,5 @@
 ./TestEquipe.java
 ./TestNiveau.java
 
-./ihm/Vue.java
+./ihm/FrameMenu.java
+./ihm/PanelMenu.java

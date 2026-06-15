@@ -24,14 +24,14 @@ public class Controleur
 
 	*/
 
-	private Vue ihm;
+	private FrameMenu ihm;
 	private Niveau metier;
 
 	public Controleur()
 	{
 
-		this.metier = new Niveau();
-		this.ihm    = new Vue(this);
+		this.metier = new Niveau        ();
+		this.ihm    = new FrameMenu(this);
 
 	}
 
