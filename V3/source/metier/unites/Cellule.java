@@ -2,10 +2,6 @@ package source.metier.unites;
 
 import source.metier.Equipe;
 
-import java.util.List;
-import java.util.ArrayList;
-
-
 /**
  * La classe {@code Cellule} est le type simple des autres Cellules.
  * Cependant cette classe n'est pas abstraite car il est également possible d'instancier des objets de type {@code Cellule}.
