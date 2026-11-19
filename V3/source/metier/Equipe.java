@@ -36,7 +36,7 @@ public class Equipe
 		return null;
 	}
 
-	public List<Cellule> getLstCellules() { return this.lstCellule       ;}
+	public List<Cellule> getLstCellules() { return new ArrayList<>(this.lstCellule);}
 	public int           getNbCellules () { return this.lstCellule.size();}  
 	public String        getNom        () { return this.nom              ;}
 
@@ -62,7 +62,7 @@ public class Equipe
 	 * 
 	 */
 
-	public void supprimerTout()
+	public void viderListe()
 	{ 
 		this.lstCellule.removeAll(lstCellule);
 		Cellule.reinitialiserCompteur();

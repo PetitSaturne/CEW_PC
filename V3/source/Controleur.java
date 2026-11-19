@@ -14,7 +14,7 @@ public class Controleur
 	public Controleur()
 	{
 
-		this.metier = new Niveau        ();
+		this.metier = new Niveau   ();
 		this.ihm    = new FrameMenu(this);
 
 	}

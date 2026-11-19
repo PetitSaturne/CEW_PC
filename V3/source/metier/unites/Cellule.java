@@ -20,9 +20,9 @@ public class Cellule
 	 * 
 	 * Ces valeurs seront ammenées à être changées pour de futures mises à jour.
 	 */
-	public static final int NB_TENTACULE_MAXI = 4;
-	public static final int NIVEAU_MAXI       = 6;
-	public static final int PV_MAXI           = 300;
+	private static final int NB_TENTACULE_MAXI = 4;
+	private static final int NIVEAU_MAXI       = 6;
+	private static final int PV_MAXI           = 300;
 
 	/**
 	 * Ces constantes définissent l'ensembles des valeurs clés correspondantes au changement d'un niveau.
@@ -34,18 +34,6 @@ public class Cellule
 	 * Ex : Une {@code Cellule} instanciée avec 10 PV et de niveau 1 doit atteindre 15 Points de Vie pour passer au niveau 2.
 	 *      Une {@code Cellule} instanciée avec 70 PV et de niveau 4 doit atteindre 60 Points de Vie pour repasser au niveau 3. 
 	 */
-
-	public static final int UP_NIVEAU_2 = 15;
-	public static final int UP_NIVEAU_3 = 40;
-	public static final int UP_NIVEAU_4 = 80;
-	public static final int UP_NIVEAU_5 = 120;
-	public static final int UP_NIVEAU_6 = 160;
-
-	public static final int DW_NIVEAU_1 = 5;
-	public static final int DW_NIVEAU_2 = 30;
-	public static final int DW_NIVEAU_3 = 60;
-	public static final int DW_NIVEAU_4 = 100;
-	public static final int DW_NIVEAU_5 = 140;
 	
 	/* Compteur séquentiel auto-incrémenté */
 
@@ -84,7 +72,7 @@ public class Cellule
 
 	public static Cellule creerCellule(int niveauActuel, int pv)
 	{
-
+		
 		if (!Cellule.parametresValide(niveauActuel, pv) ) return null;
 		
 		return new Cellule( niveauActuel, pv);
@@ -197,23 +185,39 @@ public class Cellule
 
 		int calibrageNiveauPv = 
 
-		(this.niveauActuel == 1 &&  this.pv >  Cellule.UP_NIVEAU_2)                                    ? 0 : 
-		(this.niveauActuel == 2 && (this.pv <= Cellule.DW_NIVEAU_1 || this.pv > Cellule.UP_NIVEAU_3) ) ? 1 : 
-		(this.niveauActuel == 3 && (this.pv <= Cellule.DW_NIVEAU_2 || this.pv > Cellule.UP_NIVEAU_4) ) ? 2 :	
-		(this.niveauActuel == 4 && (this.pv <= Cellule.DW_NIVEAU_3 || this.pv > Cellule.UP_NIVEAU_5) ) ? 3 : 
-		(this.niveauActuel == 5 && (this.pv <= Cellule.DW_NIVEAU_4 || this.pv > Cellule.UP_NIVEAU_6) ) ? 4 :
-		(this.niveauActuel == 6 && (this.pv <= Cellule.DW_NIVEAU_5)|| this.pv > Cellule.PV_MAXI )      ? 5 : -1;
+		(this.niveauActuel == 1 &&  this.pv >  Palier.UP_NIVEAU_2.getValeur() || this.pv == 0)                               ? 0 : 
+		(this.niveauActuel == 2 && (this.pv <= Palier.DW_NIVEAU_1.getValeur() || this.pv > Palier.UP_NIVEAU_3.getValeur()) ) ? 1 : 
+		(this.niveauActuel == 3 && (this.pv <= Palier.DW_NIVEAU_2.getValeur() || this.pv > Palier.UP_NIVEAU_4.getValeur()) ) ? 2 :	
+		(this.niveauActuel == 4 && (this.pv <= Palier.DW_NIVEAU_3.getValeur() || this.pv > Palier.UP_NIVEAU_5.getValeur()) ) ? 3 : 
+		(this.niveauActuel == 5 && (this.pv <= Palier.DW_NIVEAU_4.getValeur() || this.pv > Palier.UP_NIVEAU_6.getValeur()) ) ? 4 :
+		(this.niveauActuel == 6 && (this.pv <= Palier.DW_NIVEAU_5.getValeur())|| this.pv > Cellule.PV_MAXI )                 ? 5 : -1;
 
 		if (calibrageNiveauPv == -1) this.niveauActuel = 1;
 
 		this.pv = switch (calibrageNiveauPv) 
 		{
-			case 0 -> (int) (Math.random() * (Cellule.UP_NIVEAU_2 -1)                                             + 1 );
-			case 1 -> (int) (Math.random() * (Cellule.UP_NIVEAU_3 - Cellule.UP_NIVEAU_2 -1) + Cellule.DW_NIVEAU_1 + 1 ); 
-			case 2 -> (int) (Math.random() * (Cellule.UP_NIVEAU_4 - Cellule.DW_NIVEAU_2 -1) + Cellule.DW_NIVEAU_2 + 1 );
-			case 3 -> (int) (Math.random() * (Cellule.UP_NIVEAU_5 - Cellule.DW_NIVEAU_3 -1) + Cellule.DW_NIVEAU_3 + 1 );
-			case 4 -> (int) (Math.random() * (Cellule.UP_NIVEAU_6 - Cellule.DW_NIVEAU_4 -1) + Cellule.DW_NIVEAU_4 + 1 );
-			case 5 -> (int) (Math.random() * (Cellule.PV_MAXI     - Cellule.DW_NIVEAU_5 -1) + Cellule.DW_NIVEAU_5 + 1 );
+			case 0 ->
+			(int) (Math.random() * (Palier.UP_NIVEAU_2.getValeur() -1) + 1 );
+
+			case 1 -> 
+			(int) (Math.random() * (Palier.UP_NIVEAU_3.getValeur() - Palier.UP_NIVEAU_2.getValeur() -1) + 
+			                        Palier.DW_NIVEAU_1.getValeur() + 1 ); 
+
+			case 2 -> 
+			(int) (Math.random() * (Palier.UP_NIVEAU_4.getValeur() - Palier.DW_NIVEAU_2.getValeur() -1) + 
+			                        Palier.DW_NIVEAU_2.getValeur() + 1 );
+
+			case 3 -> 
+			(int) (Math.random() * (Palier.UP_NIVEAU_5.getValeur() - Palier.DW_NIVEAU_3.getValeur() -1) + 
+			                        Palier.DW_NIVEAU_3.getValeur() + 1 );
+
+			case 4 -> 
+			(int) (Math.random() * (Palier.UP_NIVEAU_6.getValeur() - Palier.DW_NIVEAU_4.getValeur() -1) + 
+			                        Palier.DW_NIVEAU_4.getValeur() + 1 );
+
+			case 5 -> 
+			(int) (Math.random() * (Cellule.PV_MAXI - Palier.DW_NIVEAU_5.getValeur() - 1 ) + 
+			                        Palier .DW_NIVEAU_5                 .getValeur() + 1 );
 			
 			default -> pv;
 		
@@ -224,12 +228,12 @@ public class Cellule
 	private void calibrerNiveau()
 	{
 
-		if (this.pv < Cellule.UP_NIVEAU_2)                                   this.niveauActuel = 1;
-		if (this.pv >= Cellule.UP_NIVEAU_2 && this.pv < Cellule.UP_NIVEAU_3) this.niveauActuel = 2;
-		if (this.pv >= Cellule.UP_NIVEAU_3 && this.pv < Cellule.UP_NIVEAU_4) this.niveauActuel = 3;
-		if (this.pv >= Cellule.UP_NIVEAU_4 && this.pv < Cellule.UP_NIVEAU_5) this.niveauActuel = 4;
-		if (this.pv >= Cellule.UP_NIVEAU_5 && this.pv < Cellule.UP_NIVEAU_6) this.niveauActuel = 5;
-		if (this.pv >= Cellule.UP_NIVEAU_6                                 ) this.niveauActuel = 6;
+		if (this.pv <  Palier.UP_NIVEAU_2.getValeur()                                            ) this.niveauActuel = 1;
+		if (this.pv >= Palier.UP_NIVEAU_2.getValeur() && this.pv < Palier.UP_NIVEAU_3.getValeur()) this.niveauActuel = 2;
+		if (this.pv >= Palier.UP_NIVEAU_3.getValeur() && this.pv < Palier.UP_NIVEAU_4.getValeur()) this.niveauActuel = 3;
+		if (this.pv >= Palier.UP_NIVEAU_4.getValeur() && this.pv < Palier.UP_NIVEAU_5.getValeur()) this.niveauActuel = 4;
+		if (this.pv >= Palier.UP_NIVEAU_5.getValeur() && this.pv < Palier.UP_NIVEAU_6.getValeur()) this.niveauActuel = 5;
+		if (this.pv >= Palier.UP_NIVEAU_6.getValeur()                                            ) this.niveauActuel = 6;
 
 	}
 

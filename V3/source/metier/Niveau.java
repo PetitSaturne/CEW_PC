@@ -83,7 +83,7 @@ public class Niveau
 			}
 
 			this.lstEquipes.add(e);
-			System.out.println("Équipe " + e.getNom() + " ajoutée.");
+			System.out.println("Équipe " + String.format("%-6s",e.getNom()  )+ " ajoutée.");
 		} 
 		catch (Exception ex) 
 		{

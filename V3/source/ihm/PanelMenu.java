@@ -18,21 +18,24 @@ import java.awt.event.MouseEvent;
 
 public class PanelMenu extends JPanel implements ActionListener
 {
-
+	public static final int NB_BOUTON_MENU = 3;
 
 	private Controleur ctrl;
+	private FrameMenu frameMenu;
 
 	private Image imgFond;
-	
-	private JButton btnJouer;
-	private JButton	btnParametres;
-	private JButton btnQuitter;
 
-	public PanelMenu(Controleur ctrl)
+	private JButton[] tabBtnAction;
+	
+
+
+	public PanelMenu(Controleur ctrl, FrameMenu frameMenu)
 	{	
 		JPanel panelCentre;
 
-		this.ctrl    = ctrl;
+		this.ctrl      = ctrl;
+		this.frameMenu = frameMenu;
+
 		this.imgFond = this.getToolkit().getImage ( "./source/ihm/images/fond/fond1.png" );
 
 		this.setLayout(new GridBagLayout() );
@@ -41,23 +44,22 @@ public class PanelMenu extends JPanel implements ActionListener
 		/*       Création des composants      */
 		/* ---------------------------------- */
 
-		panelCentre        = new JPanel (new GridLayout(4,1,0,60 ) );
+		panelCentre       = new JPanel (new GridLayout(4,1,0,60 ) );
 
-		this.btnJouer      = new JButton("JOUER");
-		this.btnParametres = new JButton("PARAMÈTRES");
-		this.btnQuitter    = new JButton("QUITTER");
+		this.tabBtnAction = new JButton[PanelMenu.NB_BOUTON_MENU];
+
+		this.tabBtnAction[0] = new JButton("JOUER");
+		this.tabBtnAction[1] = new JButton("PARAMÈTRES");
+		this.tabBtnAction[2] = new JButton("QUITTER");
 
 		
 		//Modification des états des composants
 		
 		//System.out.println(this.btnJouer );
 		
-		this.btnJouer.setPreferredSize(new Dimension(200,40) );
+		this.tabBtnAction[0].setPreferredSize(new Dimension(200,40) );
 
-		/*this.btnJouer     .setBorder(BorderFactory.createLineBorder(new Color(0,186,0), 6, false) );*/
-	
-		//this.btnParametres.setBorder(BorderFactory.createCompoundBorder() );
-		//this.btnQuitter   .setBorder(BorderFactory.createCompoundBorder() );
+
 
 		panelCentre.setOpaque(false);
 
@@ -65,10 +67,10 @@ public class PanelMenu extends JPanel implements ActionListener
 		/*    Positionnement des composants   */
 		/* ---------------------------------- */
 
-		panelCentre.add(this.btnJouer);
+		panelCentre.add(this.tabBtnAction[0]);
 		panelCentre.add(new JLabel() );
-		panelCentre.add(this.btnParametres);
-		panelCentre.add(this.btnQuitter);
+		panelCentre.add(this.tabBtnAction[1]);
+		panelCentre.add(this.tabBtnAction[2]);
 		
 		this.add(panelCentre, new GridBagConstraints() );
 
@@ -79,11 +81,19 @@ public class PanelMenu extends JPanel implements ActionListener
 		/*      Activation des composants     */
 		/* ---------------------------------- */
 
+		/* ------------- Action ------------- */
+
+		this.tabBtnAction[0].addActionListener(this);
+		this.tabBtnAction[1].addActionListener(this);
+		this.tabBtnAction[2].addActionListener(this);
+
+		/* ------ Gestion de la souris ------ */
+		
 		GereSouris gereSouris = new GereSouris();
 
-		this.btnJouer.addActionListener(this);
-
-		this.btnJouer.addMouseListener(gereSouris);
+		for (JButton btn : tabBtnAction) 	
+			btn.addMouseListener(gereSouris);
+		
 
 
 	}
@@ -113,31 +123,42 @@ public class PanelMenu extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		if (e.getSource() == this.tabBtnAction[2]) System.exit(0);
 
 	}
 	
 
 
-	private class GereSouris extends MouseAdapter
+	private class GereSouris extends MouseAdapter	
 	{
+
+		private JButton btnTemp = new JButton();
+		
 		@Override 
-		public void mouseEntered(MouseEvent e)
+		public void mouseEntered(MouseEvent ev)
 		{
-			PanelMenu.this.btnJouer.setBackground(new Color(0,188,0) );
+			String nomBtn = ( (JButton) ev.getSource() ).getText().toLowerCase().trim();
+
+			if (nomBtn.equals("jouer"       ) ) PanelMenu.this.tabBtnAction[0].setBackground(new Color(100,188,0) );
+			if (nomBtn.equals("paramètres"  ) ) PanelMenu.this.tabBtnAction[1].setBackground(new Color(100,188,0) );
+			if (nomBtn.equals("quitter"     ) ) PanelMenu.this.tabBtnAction[2].setBackground(new Color(188,75,0) );
 		}
 
 		@Override
-		public void mouseExited(MouseEvent e)
+		public void mouseExited(MouseEvent ev)
 		{
-			PanelMenu.this.btnJouer.setBackground(new JButton().getBackground() );
+			for (JButton btn : PanelMenu.this.tabBtnAction) 
+			{
+				btn.setBackground(this.btnTemp.getBackground() );
+			}
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent e)
+		public void mouseClicked(MouseEvent ev)
 		{
-			if (e.getButton() == MouseEvent.BUTTON1) System.out.println("Clique Gauche" );
-			if (e.getButton() == MouseEvent.BUTTON2) System.out.println("Clique Central");
-			if (e.getButton() == MouseEvent.BUTTON3) System.out.println("Clique Droit"  );
+			if (ev.getButton() == MouseEvent.BUTTON1) System.out.println("Clique Gauche" );
+			if (ev.getButton() == MouseEvent.BUTTON2) System.out.println("Clique Central");
+			if (ev.getButton() == MouseEvent.BUTTON3) System.out.println("Clique Droit"  );
 		}
 
 	}
@@ -173,5 +194,12 @@ public class PanelMenu extends JPanel implements ActionListener
 	------------ Obtenir la taille d'un composant ---------------
 
 	this.<cmp>.getPreferredSize() );
+
+	-- Modifier la forme d'un bouton (test) non finalisé ---
+
+	/*this.btnJouer     .setBorder(BorderFactory.createLineBorder(new Color(0,186,0), 6, false) );
+	
+	//this.btnParametres.setBorder(BorderFactory.createCompoundBorder() );
+	//this.btnQuitter   .setBorder(BorderFactory.createCompoundBorder() );
 
 */

@@ -18,6 +18,7 @@ public class FrameMenu extends JFrame
 
 		this.setTitle("Organisms Battle");
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setSize(400,400);
 
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, 
 		             Toolkit.getDefaultToolkit().getScreenSize().height);	
@@ -26,7 +27,7 @@ public class FrameMenu extends JFrame
 		/*       Création des composants      */
 		/* ---------------------------------- */
 
-		this.panelMenu = new PanelMenu(ctrl);
+		this.panelMenu = new PanelMenu(ctrl,this);
 
 		/* ---------------------------------- */
 		/*    Positionnement des composants   */

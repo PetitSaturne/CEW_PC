@@ -68,7 +68,7 @@ public class TestNiveau
 
 		System.out.println();
 
-		n1.supprimerLiaison('E', 'Z'); // La Cellule n°2 n'existe pas
+		n1.supprimerLiaison('E', 'Z'); // La Cellule n°2 n'existe pas	
 		n1.supprimerLiaison('Z', 'P'); // Les deux Cellules n'existent pas
 		n1.supprimerLiaison('E', 'A'); // Suppression de la liaison
 		n1.supprimerLiaison('E', 'A'); // La liaison n'existe plus.

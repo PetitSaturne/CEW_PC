@@ -57,7 +57,7 @@ public class TestEquipe
 		System.out.println(joueur.afficherListeCellule() );
 
 		System.out.println("\n Test d'ajout des PV en fonction du niveau");
-		joueur.supprimerTout();
+		joueur.viderListe();
 
 		//joueur.ajouterCellule(null, 1, 0, advRouge);
 		//joueur.ajouterCellule(null, 7, 0, advRouge);
