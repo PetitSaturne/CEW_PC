@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+*.todolist
 
 # BlueJ files
 *.ctxt
@@ -18,4 +19,4 @@
 *.zip
 *.tar.gz
 *.rar
-*.todolist
+
