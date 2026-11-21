@@ -8,14 +8,14 @@ public class Controleur
 
 
 
-	private FrameMenu ihm;
+	private MainFrame ihm;
 	private Niveau metier;
 
 	public Controleur()
 	{
 
 		this.metier = new Niveau   ();
-		this.ihm    = new FrameMenu(this);
+		this.ihm    = new MainFrame(this);
 
 	}
 

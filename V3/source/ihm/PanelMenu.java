@@ -21,7 +21,9 @@ public class PanelMenu extends JPanel implements ActionListener
 	public static final int NB_BOUTON_MENU = 3;
 
 	private Controleur ctrl;
-	private FrameMenu frameMenu;
+	private MainFrame frameMenu;
+
+	
 
 	private Image imgFond;
 
@@ -29,7 +31,7 @@ public class PanelMenu extends JPanel implements ActionListener
 	
 
 
-	public PanelMenu(Controleur ctrl, FrameMenu frameMenu)
+	public PanelMenu(Controleur ctrl, MainFrame frameMenu)
 	{	
 		JPanel panelCentre;
 
@@ -48,14 +50,14 @@ public class PanelMenu extends JPanel implements ActionListener
 
 		this.tabBtnAction = new JButton[PanelMenu.NB_BOUTON_MENU];
 
-		this.tabBtnAction[0] = new JButton("JOUER");
+		this.tabBtnAction[0] = new JButton("JOUER"     );
 		this.tabBtnAction[1] = new JButton("PARAMÈTRES");
-		this.tabBtnAction[2] = new JButton("QUITTER");
+		this.tabBtnAction[2] = new JButton("QUITTER"   );
 
-		
-		//Modification des états des composants
-		
-		//System.out.println(this.btnJouer );
+		for (JButton boutton : tabBtnAction) 
+			boutton.setName(boutton.getText().toLowerCase() );
+	
+		/* ------ états des composants ------ */
 		
 		this.tabBtnAction[0].setPreferredSize(new Dimension(200,40) );
 
@@ -68,7 +70,7 @@ public class PanelMenu extends JPanel implements ActionListener
 		/* ---------------------------------- */
 
 		panelCentre.add(this.tabBtnAction[0]);
-		panelCentre.add(new JLabel() );
+		panelCentre.add(new JLabel()        );
 		panelCentre.add(this.tabBtnAction[1]);
 		panelCentre.add(this.tabBtnAction[2]);
 		
@@ -124,6 +126,7 @@ public class PanelMenu extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		if (e.getSource() == this.tabBtnAction[2]) System.exit(0);
+		if (e.getSource() == this.tabBtnAction[0]) this.frameMenu.changerPanel(this, this.tabBtnAction[0].getName() );
 
 	}
 	

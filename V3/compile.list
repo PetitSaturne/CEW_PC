@@ -11,8 +11,9 @@
 ./source/metier/unites/CelluleSoin.java
 ./source/metier/unites/CelluleBonus.java
 
-./source/ihm/FrameMenu.java
+./source/ihm/MainFrame.java
 ./source/ihm/PanelMenu.java
+./source/ihm/PanelJouer.java
 
 ./source/Controleur.java
 ./source/TestCellule.java
